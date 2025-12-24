@@ -1,20 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node{
-    int key;
-    int value;
-    struct Node* prev;
-    struct Node* next;
-}Node;
-
-typedef struct {
-    int capacity;
-    int size;
-    Node* head;
-    Node* tail;
-    Node** map;
-}LRUCache;
+#include "LRU_Cache.h"
 
 void add_node(LRUCache* cache, Node* node){
     node->prev = cache->head;
