@@ -2,6 +2,6 @@
 
 Implémentation d'un cache LRU (Least Recently Used) en C.
 
-## Utilisation
+## How To Execute
 1. Compiler : `make`
 2. Exécuter : `./lru_app`
