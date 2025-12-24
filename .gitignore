@@ -51,13 +51,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# Debug information files
+# debug information files
 *.dwo
-
-# --- Custom additions ---
-
-# Ignore my specific executable
-lru_app
-
-# Ignore editor settings (VS Code)
-.vscode/
