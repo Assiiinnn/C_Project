@@ -53,3 +53,11 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# --- Custom additions ---
+
+# Ignore my specific executable
+lru_app
+
+# Ignore editor settings (VS Code)
+.vscode/
