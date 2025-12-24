@@ -8,7 +8,7 @@ int main() {
     lRUCachePut(cache, 2, 20);
     printf("Get 1: %d\n", lRUCacheGet(cache, 1)); 
     lRUCachePut(cache, 3, 30); 
-    printf("Get 2: %d (attendu -1)\n", lRUCacheGet(cache, 2)); 
+    printf("Get 2: %d\n", lRUCacheGet(cache, 2)); 
     lRUCacheFree(cache);
     return 0;
 }
