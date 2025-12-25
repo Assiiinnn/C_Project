@@ -47,3 +47,9 @@ To achieve **O(1)** time complexity, we cannot use a simple array or a simple li
 **Option A: Using Make (Recommended for Linux/GitHub)**
 ```bash
 make
+#### Option B: Manual Compilation (No Make installed)
+If you do not have `make` installed (common on Windows), you can compile the project manually using GCC.
+
+**1. Compile the code:**
+```bash
+gcc main.c LRU_Cache.c -o lru_app
