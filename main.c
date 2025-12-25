@@ -13,7 +13,7 @@ void assert_equal(int actual, int expected, const char* test_name) {
 
 int main() {
     printf("=== Lancement des Tests Unitaires ===\n\n");
-    LRUCache* cache = 
+    LRUCache* cache = lRUCacheCreate(2);
     lRUCachePut(cache, 1, 10);
     lRUCachePut(cache, 2, 20);
     assert_equal(lRUCacheGet(cache, 1), 10, "Recuperation cle 1");
