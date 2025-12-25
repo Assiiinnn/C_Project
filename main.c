@@ -4,10 +4,10 @@
 
 void assert_equal(int actual, int expected, const char* test_name) {
     if (actual != expected) {
-        printf("❌ [ECHEC] %s : Attendu %d, Obtenu %d\n", test_name, expected, actual);
+        printf(" [ECHEC] %s : Attendu %d, Obtenu %d\n", test_name, expected, actual);
         exit(1); 
     } else {
-        printf("✅ [SUCCES] %s\n", test_name);
+        printf(" [SUCCES] %s\n", test_name);
     }
 }
 
@@ -24,6 +24,6 @@ int main() {
     assert_equal(lRUCacheGet(cache, 3), 30, "Presence de la cle 3");
     assert_equal(lRUCacheGet(cache, 99), -1, "Cle inexistante");
     lRUCacheFree(cache);
-    printf("\n🎉 TOUS LES TESTS SONT PASSES !\n");
+    printf("\n TOUS LES TESTS SONT PASSES !\n");
     return 0;
 }
