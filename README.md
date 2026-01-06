@@ -1,6 +1,6 @@
 # 🚀 LRU Cache Implementation in C
 
-![Build Status](https://github.com/Assiiinnn/C_Project/actions/workflows/test.yml)
+![Build Status](https://github.com/Assiiinnn/C_Project/actions/workflows/test.yml/badge.svg)
 
 An efficient implementation of the **Least Recently Used (LRU) Cache** algorithm in C with interactive visualization.
 
