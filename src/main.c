@@ -27,4 +27,3 @@ int main() {
     printf("\n TOUS LES TESTS SONT PASSES !\n");
     return 0;
 }
-
