@@ -1,27 +1,35 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g -Isrc
-SRC = src
-TEST = tests
+SRC_DIR = src
+TEST_DIR = tests
 
-all: lru_app test_lru
+# Liste des fichiers sources (adaptation automatique si tu ajoutes d'autres fichiers .c)
+SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/LRU_Cache.c
+OBJS = $(SRCS:.c=.o)
 
-lru_app: main.o LRU_Cache.o
-	$(CC) $(CFLAGS) -o lru_app main.o LRU_Cache.o
+# Nom de l'exécutable final
+TARGET = lru_app
 
-test_lru: test_lru.o LRU_Cache.o
-	$(CC) $(CFLAGS) -o test_lru test_lru.o LRU_Cache.o
+# Règle par défaut (ce qui se lance quand tu tapes juste "make")
+all: $(TARGET)
 
-main.o: $(SRC)/main.c $(SRC)/LRU_Cache.h
-	$(CC) $(CFLAGS) -c $(SRC)/main.c
+# Édition de liens (Linking) : Crée l'exécutable à partir des .o
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-test_lru.o: $(TEST)/test_lru.c $(SRC)/LRU_Cache.h
-	$(CC) $(CFLAGS) -c $(TEST)/test_lru.c
+# Compilation : Crée les .o à partir des .c
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-LRU_Cache.o: $(SRC)/LRU_Cache.c $(SRC)/LRU_Cache.h
-	$(CC) $(CFLAGS) -c $(SRC)/LRU_Cache.c
+# Règle pour lancer les tests (Python + JSON)
+test: $(TARGET)
+	@echo "--------------------------------------"
+	@echo "🚀 Lancement des tests automatisés..."
+	@echo "--------------------------------------"
+	python3 $(TEST_DIR)/test_runner.py
 
-test: test_lru
-	./test_lru
-
+# Nettoyage des fichiers générés
 clean:
-	rm -f *.o lru_app test_lru
+	rm -f $(SRC_DIR)/*.o $(TARGET) $(TARGET).exe
+
+.PHONY: all test clean
