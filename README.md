@@ -95,11 +95,14 @@ gcc -Wall -Wextra -std=c99 -Isrc src/LRU_Cache.c tests/test_lru.c -o test_lru
 
 **On Windows (with MinGW):**
 ```bash
-# Compile the test executable
-gcc -Wall -Wextra -std=c99 -Isrc src/LRU_Cache.c tests/test_lru.c -o test_lru.exe
+# Build (Note: use mingw32-make if make is not aliased)
+mingw32-make
 
-# Run tests
-test_lru.exe
+# Run unit tests
+./test_lru
+
+# Clean build artifacts
+mingw32-make clean
 ```
 
 ### ✅ Expected Test Output
