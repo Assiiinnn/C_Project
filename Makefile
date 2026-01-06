@@ -1,25 +1,21 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g -Isrc
-SRC_DIR = src
-TEST_DIR = tests
+SRC = src
+TEST = tests
 
-SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/LRU_Cache.c
-OBJS = $(SRCS:.c=.o)
+all: test_lru
 
-TARGET = lru_app
+test_lru: test_lru.o LRU_Cache.o
+	$(CC) $(CFLAGS) -o test_lru test_lru.o LRU_Cache.o
 
-all: $(TARGET)
+test_lru.o: $(TEST)/test_lru.c $(SRC)/LRU_Cache.h
+	$(CC) $(CFLAGS) -c $(TEST)/test_lru.c
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+LRU_Cache.o: $(SRC)/LRU_Cache.c $(SRC)/LRU_Cache.h
+	$(CC) $(CFLAGS) -c $(SRC)/LRU_Cache.c
 
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-test: $(TARGET)
-	python3 $(TEST_DIR)/test_runner.py
+test: test_lru
+	./test_lru
 
 clean:
-	rm -f $(SRC_DIR)/*.o $(TARGET) $(TARGET).exe
-
-.PHONY: all test clean
+	rm -f *.o test_lru
