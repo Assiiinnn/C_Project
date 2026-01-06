@@ -58,7 +58,7 @@ gcc main.c LRU_Cache.c -o lru_app
 ## 🎨 Live Visualization
 
 I have added an interactive frontend to visualize how the LRU Cache algorithm works step-by-step.
-**[Click here to try the Live Visualizer](https://assiiinnn.github.io/C_Project/)**
+**[Click here to try the Live Visualizer](https://assiiinnn.github.io/c_project/)**
 
 *(Note: The visualizer is a JavaScript simulation of the C logic for demonstration purposes.)*
 
