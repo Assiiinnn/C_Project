@@ -215,7 +215,6 @@
     <div class="container">
         <h1>🗄️ LRU Cache Visualizer</h1>
         
-        <!-- Initialization Section -->
         <div class="section">
             <h2>1️⃣ Initialize Cache</h2>
             <div class="input-group">
@@ -225,7 +224,6 @@
             </div>
         </div>
 
-        <!-- Operations Section -->
         <div class="section">
             <h2>2️⃣ Operations</h2>
             
@@ -249,13 +247,11 @@
             </div>
         </div>
 
-        <!-- Result Section -->
         <div class="section">
             <h2>3️⃣ Result</h2>
             <div id="result" class="result-box">Ready! Create a cache to start.</div>
         </div>
 
-        <!-- Cache State Visualization -->
         <div class="section">
             <h2>4️⃣ Cache State (Visual)</h2>
             <div class="cache-info">
@@ -268,7 +264,6 @@
             <p class="note">← Most Recently Used | Least Recently Used →</p>
         </div>
 
-        <!-- Operation Log -->
         <div class="section">
             <h2>5️⃣ Operation Log</h2>
             <div id="log" class="log-box">
@@ -278,11 +273,10 @@
     </div>
 
     <script>
-        // Simple LRU Cache Implementation in JavaScript
         class LRUCache {
             constructor(capacity) {
                 this.capacity = capacity;
-                this.cache = new Map(); // Maintains insertion order
+                this.cache = new Map(); 
             }
 
             get(key) {
@@ -290,7 +284,6 @@
                     return -1;
                 }
                 
-                // Move to end (most recent)
                 const value = this.cache.get(key);
                 this.cache.delete(key);
                 this.cache.set(key, value);
@@ -300,19 +293,16 @@
             put(key, value) {
                 let evicted = null;
                 
-                // If key exists, delete it first
                 if (this.cache.has(key)) {
                     this.cache.delete(key);
                 }
                 
-                // If at capacity, remove oldest (first item)
                 if (this.cache.size >= this.capacity) {
                     const firstKey = this.cache.keys().next().value;
                     evicted = firstKey;
                     this.cache.delete(firstKey);
                 }
                 
-                // Add new item
                 this.cache.set(key, value);
                 return evicted;
             }
@@ -329,7 +319,6 @@
 
         let cache = null;
 
-        // Create cache
         function createCache() {
             const capacity = parseInt(document.getElementById('capacity').value);
             
@@ -344,7 +333,6 @@
             addLog(`Cache initialized (capacity: ${capacity})`, 'success');
         }
 
-        // PUT operation
         function putValue() {
             if (!cache) {
                 displayResult('❌ Please create a cache first!', 'error');
@@ -371,12 +359,10 @@
             updateVisualization();
             addLog(`PUT(${key}, ${value})`, 'success');
             
-            // Clear inputs
             document.getElementById('putKey').value = '';
             document.getElementById('putValue').value = '';
         }
 
-        // GET operation
         function getValue() {
             if (!cache) {
                 displayResult('❌ Please create a cache first!', 'error');
@@ -404,14 +390,12 @@
             document.getElementById('getKey').value = '';
         }
 
-        // Display result
         function displayResult(message, type) {
             const resultBox = document.getElementById('result');
             resultBox.textContent = message;
             resultBox.className = `result-box ${type}`;
         }
 
-        // Update visualization
         function updateVisualization() {
             const state = cache.getState();
             const container = document.getElementById('cacheState');
@@ -426,7 +410,6 @@
             
             container.innerHTML = '';
             
-            // Display from most recent to least recent (reverse order)
             const displayOrder = [...state.order].reverse();
             displayOrder.forEach(key => {
                 const value = state.items[key];
@@ -440,7 +423,6 @@
             });
         }
 
-        // Add log entry
         function addLog(message, type) {
             const logBox = document.getElementById('log');
             const timestamp = new Date().toLocaleTimeString();
@@ -451,13 +433,11 @@
             
             logBox.insertBefore(entry, logBox.firstChild);
             
-            // Keep only last 50 entries
             while (logBox.children.length > 50) {
                 logBox.removeChild(logBox.lastChild);
             }
         }
 
-        // Run example sequence
         function runExample() {
             createCache();
             
@@ -491,7 +471,6 @@
             }, 2500);
         }
 
-        // Reset cache
         function resetCache() {
             cache = null;
             document.getElementById('cacheState').innerHTML = '<div class="empty-cache">No cache created yet</div>';
@@ -502,7 +481,6 @@
             addLog('Cache reset', 'warning');
         }
 
-        // Keyboard shortcuts
         document.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const activeId = document.activeElement.id;
