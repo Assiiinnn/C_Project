@@ -262,7 +262,7 @@ Test cases are defined in `tests/input.json` and can be easily extended:
 
 ```bash
 # 1. Fork and clone the repository
-git clone https://github.com/YOUR_USERNAME/C_Project.git
+git clone https://github.com/Assiiinnn/C_Project.git
 cd C_Project
 
 # 2. Create a feature branch
