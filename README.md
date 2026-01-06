@@ -46,7 +46,17 @@ To achieve **O(1)** time complexity, we cannot use a simple array or a simple li
 
 **Option A: Using Make (Recommended for Linux/GitHub)**
 ```bash
+# Build everything (main app + tests)
 make
+
+# Run unit tests
+make test
+
+# Run main application
+make run
+
+# Clean build artifacts
+make clean
 ```
 #### Option B: Manual Compilation (No Make installed)
 If you do not have `make` installed (common on Windows), you can compile the project manually using GCC.
@@ -54,6 +64,11 @@ If you do not have `make` installed (common on Windows), you can compile the pro
 ```bash
 gcc src/main.c src/LRU_Cache.c -Isrc -o lru_app
 .\lru_app.exe
+```
+Compile and run tests:
+```bash
+gcc LRU_Cache.c tests.c -o test_lru
+./test_lru
 ```
 ## 🎨 Live Visualization
 
