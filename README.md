@@ -2,15 +2,15 @@
 
 ![Build Status](https://github.com/Assiiinnn/C_Project/actions/workflows/test.yml/badge.svg)
 
-An efficient implementation of the **Least Recently Used (LRU) Cache** algorithm in C with interactive visualization.
+An efficient implementation of the **Least Recently Used (LRU) Cache** algorithm in C, featuring an interactive visualization.
 
 ## 📌 Problem Description & LeetCode Reference
 
 **Problem:** Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
 
-* `lRUCacheCreate(int capacity)` Initialize the LRU cache with positive size capacity.
-* `lRUCacheGet(int key)` Return the value of the `key` if the key exists, otherwise return `-1`.
-* `lRUCachePut(int key, int value)` Update the value of the `key` if the `key` exists. Otherwise, add the `key-value` pair to the cache. If the number of keys exceeds the `capacity` from this operation, **evict** the least recently used key.
+* `lRUCacheCreate(int capacity)`: Initialize the LRU cache with a **positive capacity**.
+* `lRUCacheGet(int key)`: Return the value of the `key` if it exists, otherwise return `-1`.
+* `lRUCachePut(int key, int value)`: Update the value of the `key` if it already exists. Otherwise, add the `key-value` pair to the cache. If the cache reaches its `capacity`, **evict** the least recently used key to make room.
 
 **Reference:** [LeetCode #146 - LRU Cache](https://leetcode.com/problems/lru-cache/)
 
@@ -18,11 +18,11 @@ An efficient implementation of the **Least Recently Used (LRU) Cache** algorithm
 
 A classic example of an LRU Cache is a **Web Browser History**:
 
-Imagine your browser can only remember the last 100 pages you visited to let you go "Back".
+Imagine your browser can only remember the last 100 pages you visited:
 
-1. When you visit a page, it's added to the top of the list.
-2. If you revisit an old page, it moves back to the top (it becomes "recently used").
-3. If you visit a 101st page, the browser "forgets" the oldest page at the bottom of the list to make room.
+1. When you visit a page, it's added to the top of the list (Most Recently Used).
+2. If you revisit an old page, it moves back to the top.
+3. If you visit a 101st page, the browser "forgets" (evicts) the oldest page at the bottom of the list.
 
 ## 💡 Approach and Explanation
 
@@ -31,8 +31,8 @@ To achieve **O(1)** time complexity, we use a **Hybrid Data Structure**:
 1. **Doubly Linked List**: Stores the actual keys and values ordered by usage.
    * **Head**: Most Recently Used (MRU).
    * **Tail**: Least Recently Used (LRU).
-2. **Hash Map (Array of Pointers)**: Stores pointers to the nodes in the linked list.
-   * Allows us to jump directly to a node in the list without scanning it.
+2. **Hash Table (Array of Pointers)**: Stores pointers to the nodes in the linked list.
+   * Allows us to jump directly to a node in the list without iterating through it.
 
 ## ⏱️ Time and Space Complexity
 
@@ -40,39 +40,6 @@ To achieve **O(1)** time complexity, we use a **Hybrid Data Structure**:
 * **Space Complexity:** **O(C)** where C is the capacity.
 
 ## 📂 Project Structure
-
-```
-C_Project/
-├── .github/
-│   └── workflows/
-│       └── test.yml        # CI/CD pipeline configuration
-├── docs/
-│   └── index.html          # 🎨 BONUS: Interactive web visualizer
-├── src/
-│   ├── LRU_Cache.c         # Core LRU implementation
-│   └── LRU_Cache.h         # Header file with API definitions
-├── tests/
-│   ├── input.json          # Test case definitions
-│   └── test_lru.c          # Unit test suite
-├── .gitignore              # Git ignore rules
-├── Makefile                # Build automation
-└── README.md               # This file
-```
-
-## 🛠️ How to Compile and Run
-
-### Prerequisites
-
-* **GCC Compiler** (MinGW on Windows)
-* **Make** (optional but recommended)
-* **Git** (for cloning the repository)
-
-### 🔽 Clone the Repository
-
-```bash
-git clone https://github.com/Assiiinnn/C_Project.git
-cd C_Project
-```
 
 ### 🏗️ Build and Test
 
