@@ -52,7 +52,7 @@ make
 If you do not have `make` installed (common on Windows), you can compile the project manually using GCC.
 
 ```bash
-gcc main.c LRU_Cache.c -o lru_app
+gcc src/main.c src/LRU_Cache.c -Isrc -o lru_app
 .\lru_app.exe
 ```
 ## 🎨 Live Visualization
