@@ -1,1 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRU Cache Visualizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 20px 0 15px 0;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+            min-width: 80px;
+        }
+
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 120px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result-box {
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            min-height: 50px;
+            border-left: 4px solid #667eea;
+            font-family: 'Courier New', monospace;
+            margin-top: 10px;
+        }
+
+        .success { border-left-color: #28a745; background: #d4edda; }
+        .warning { border-left-color: #ffc107; background: #fff3cd; }
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+
+        .cache-info {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .cache-visualization {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            min-height: 120px;
+            overflow-x: auto;
+            align-items: center;
+        }
+
+        .cache-item {
+            min-width: 120px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cache-key {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .cache-value {
+            font-size: 1.5em;
+            margin-top: 5px;
+        }
+
+        .empty-cache {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        .note {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .log-box {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .log-entry {
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            border-left: 3px solid #667eea;
+        }
+
+        .examples {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .examples button {
+            background: #2196F3;
+            margin: 5px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        .examples button:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗄️ LRU Cache Visualizer</h1>
+        
+        <div class="section">
+            <h2>1️⃣ Initialize Cache</h2>
+            <div class="input-group">
+                <label>Capacity:</label>
+                <input type="number" id="capacity" value="3" min="1" max="10">
+                <button onclick="createCache()">Create Cache</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2️⃣ Operations</h2>
+            
+            <div class="input-group">
+                <label>PUT:</label>
+                <input type="number" id="putKey" placeholder="Key (e.g., 1)">
+                <input type="number" id="putValue" placeholder="Value (e.g., 100)">
+                <button onclick="putValue()">Add to Cache</button>
+            </div>
+
+            <div class="input-group">
+                <label>GET:</label>
+                <input type="number" id="getKey" placeholder="Key (e.g., 1)">
+                <button onclick="getValue()">Get from Cache</button>
+            </div>
+
+            <div class="examples">
+                <strong>Quick Examples:</strong>
+                <button onclick="runExample()">Run Demo Sequence</button>
+                <button onclick="resetCache()">Reset Cache</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3️⃣ Result</h2>
+            <div id="result" class="result-box">Ready! Create a cache to start.</div>
+        </div>
+
+        <div class="section">
+            <h2>4️⃣ Cache State (Visual)</h2>
+            <div class="cache-info">
+                <span>Size: <strong id="cacheSize">0</strong></span>
+                <span>Capacity: <strong id="cacheCapacity">0</strong></span>
+            </div>
+            <div id="cacheState" class="cache-visualization">
+                <div class="empty-cache">No cache created yet</div>
+            </div>
+            <p class="note">← Most Recently Used | Least Recently Used →</p>
+        </div>
+
+        <div class="section">
+            <h2>5️⃣ Operation Log</h2>
+            <div id="log" class="log-box">
+                <div class="log-entry">Waiting for operations...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class LRUCache {
+            constructor(capacity) {
+                this.capacity = capacity;
+                this.cache = new Map(); 
+            }
+
+            get(key) {
+                if (!this.cache.has(key)) {
+                    return -1;
+                }
+                
+                const value = this.cache.get(key);
+                this.cache.delete(key);
+                this.cache.set(key, value);
+                return value;
+            }
+
+            put(key, value) {
+                let evicted = null;
+                
+                if (this.cache.has(key)) {
+                    this.cache.delete(key);
+                }
+                
+                if (this.cache.size >= this.capacity) {
+                    const firstKey = this.cache.keys().next().value;
+                    evicted = firstKey;
+                    this.cache.delete(firstKey);
+                }
+                
+                this.cache.set(key, value);
+                return evicted;
+            }
+
+            getState() {
+                return {
+                    items: Object.fromEntries(this.cache),
+                    order: Array.from(this.cache.keys()),
+                    size: this.cache.size,
+                    capacity: this.capacity
+                };
+            }
+        }
+
+        let cache = null;
+
+        function createCache() {
+            const capacity = parseInt(document.getElementById('capacity').value);
+            
+            if (capacity < 1 || capacity > 10) {
+                displayResult('❌ Capacity must be between 1 and 10', 'error');
+                return;
+            }
+            
+            cache = new LRUCache(capacity);
+            displayResult(`✅ Cache created with capacity ${capacity}`, 'success');
+            updateVisualization();
+            addLog(`Cache initialized (capacity: ${capacity})`, 'success');
+        }
+
+        function putValue() {
+            if (!cache) {
+                displayResult('❌ Please create a cache first!', 'error');
+                return;
+            }
+
+            const key = parseInt(document.getElementById('putKey').value);
+            const value = parseInt(document.getElementById('putValue').value);
+            
+            if (isNaN(key) || isNaN(value)) {
+                displayResult('❌ Please enter valid numbers', 'error');
+                return;
+            }
+            
+            const evicted = cache.put(key, value);
+            
+            let message = `✅ PUT(${key}, ${value})`;
+            if (evicted !== null) {
+                message += ` → Evicted key ${evicted}`;
+                addLog(`⚠️ Evicted key ${evicted} (was LRU)`, 'warning');
+            }
+            
+            displayResult(message, 'success');
+            updateVisualization();
+            addLog(`PUT(${key}, ${value})`, 'success');
+            
+            document.getElementById('putKey').value = '';
+            document.getElementById('putValue').value = '';
+        }
+
+        function getValue() {
+            if (!cache) {
+                displayResult('❌ Please create a cache first!', 'error');
+                return;
+            }
+
+            const key = parseInt(document.getElementById('getKey').value);
+            
+            if (isNaN(key)) {
+                displayResult('❌ Please enter a valid key', 'error');
+                return;
+            }
+            
+            const value = cache.get(key);
+            
+            if (value !== -1) {
+                displayResult(`✅ GET(${key}) = ${value}`, 'success');
+                addLog(`GET(${key}) → ${value}`, 'success');
+            } else {
+                displayResult(`⚠️ GET(${key}) = Not Found`, 'warning');
+                addLog(`GET(${key}) → Not Found`, 'warning');
+            }
+            
+            updateVisualization();
+            document.getElementById('getKey').value = '';
+        }
+
+        function displayResult(message, type) {
+            const resultBox = document.getElementById('result');
+            resultBox.textContent = message;
+            resultBox.className = `result-box ${type}`;
+        }
+
+        function updateVisualization() {
+            const state = cache.getState();
+            const container = document.getElementById('cacheState');
+            
+            document.getElementById('cacheSize').textContent = state.size;
+            document.getElementById('cacheCapacity').textContent = state.capacity;
+            
+            if (state.order.length === 0) {
+                container.innerHTML = '<div class="empty-cache">Cache is empty</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            const displayOrder = [...state.order].reverse();
+            displayOrder.forEach(key => {
+                const value = state.items[key];
+                const item = document.createElement('div');
+                item.className = 'cache-item';
+                item.innerHTML = `
+                    <div class="cache-key">Key: ${key}</div>
+                    <div class="cache-value">${value}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function addLog(message, type) {
+            const logBox = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${timestamp}] ${message}`;
+            
+            logBox.insertBefore(entry, logBox.firstChild);
+            
+            while (logBox.children.length > 50) {
+                logBox.removeChild(logBox.lastChild);
+            }
+        }
+
+        function runExample() {
+            createCache();
+            
+            setTimeout(() => {
+                document.getElementById('putKey').value = 1;
+                document.getElementById('putValue').value = 10;
+                putValue();
+            }, 500);
+            
+            setTimeout(() => {
+                document.getElementById('putKey').value = 2;
+                document.getElementById('putValue').value = 20;
+                putValue();
+            }, 4500);
+            
+            setTimeout(() => {
+                document.getElementById('putKey').value = 3;
+                document.getElementById('putValue').value = 30;
+                putValue();
+            }, 8500);
+            
+            setTimeout(() => {
+                document.getElementById('getKey').value = 1;
+                getValue();
+            }, 12500);
+            
+            setTimeout(() => {
+                document.getElementById('putKey').value = 4;
+                document.getElementById('putValue').value = 40;
+                putValue();
+            }, 16500);
+        }
+
+        function resetCache() {
+            cache = null;
+            document.getElementById('cacheState').innerHTML = '<div class="empty-cache">No cache created yet</div>';
+            document.getElementById('cacheSize').textContent = '0';
+            document.getElementById('cacheCapacity').textContent = '0';
+            document.getElementById('result').textContent = 'Cache reset. Create a new one to start.';
+            document.getElementById('result').className = 'result-box';
+            addLog('Cache reset', 'warning');
+        }
+
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const activeId = document.activeElement.id;
+                if (activeId === 'putKey' || activeId === 'putValue') {
+                    putValue();
+                } else if (activeId === 'getKey') {
+                    getValue();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
 
