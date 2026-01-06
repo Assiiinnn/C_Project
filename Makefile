@@ -1,16 +1,17 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -g -Isrc
+SRC = src
 
 all: lru_app
 
 lru_app: main.o LRU_Cache.o
 	$(CC) $(CFLAGS) -o lru_app main.o LRU_Cache.o
 
-main.o: main.c LRU_Cache.h
-	$(CC) $(CFLAGS) -c main.c
+main.o: $(SRC)/main.c $(SRC)/LRU_Cache.h
+	$(CC) $(CFLAGS) -c $(SRC)/main.c
 
-LRU_Cache.o: LRU_Cache.c LRU_Cache.h
-	$(CC) $(CFLAGS) -c LRU_Cache.c
+LRU_Cache.o: $(SRC)/LRU_Cache.c $(SRC)/LRU_Cache.h
+	$(CC) $(CFLAGS) -c $(SRC)/LRU_Cache.c
 
 clean:
 	rm -f *.o lru_app
