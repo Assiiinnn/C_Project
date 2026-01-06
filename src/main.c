@@ -4,15 +4,14 @@
 #include "LRU_Cache.h"
 
 int main(int argc, char *argv[]) {
-    // 1. Définir la capacité (argument ou défaut)
+    // 1. Lire la capacité (par défaut 2)
     int capacity = (argc > 1) ? atoi(argv[1]) : 2;
     LRUCache* cache = lRUCacheCreate(capacity);
     
     char command[10];
     int key, value;
 
-    // 2. Boucle : Attend les ordres du script de test Python
-    // (Le script "écrit" dans le clavier virtuel du programme)
+    // 2. Boucle d'écoute (Attend les ordres de Python)
     while (scanf("%s", command) != EOF) {
         
         if (strcmp(command, "PUT") == 0) {
@@ -23,9 +22,9 @@ int main(int argc, char *argv[]) {
             scanf("%d", &key);
             int result = lRUCacheGet(cache, key);
             
-            // 3. Répondre au script Python
+            // 3. Réponse immédiate
             printf("%d\n", result);
-            fflush(stdout); // OBLIGATOIRE : Envoie la réponse tout de suite
+            fflush(stdout); // CRUCIAL pour que le test ne bloque pas
         }
     }
 
