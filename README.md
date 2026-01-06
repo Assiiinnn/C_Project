@@ -329,9 +329,7 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 This project is open source and available under the MIT License.
 
-## 👨‍💻 Author
 
-Made with ❤️ by [Assiiinnn](https://github.com/Assiiinnn)
 
 ## 🌟 Acknowledgments
 
