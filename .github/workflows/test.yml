@@ -17,4 +17,4 @@ jobs:
       run: make
 
     - name: Run Unit Tests
-      run: ./lru_app
+      run: ./test_lru
