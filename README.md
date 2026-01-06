@@ -54,4 +54,11 @@ If you do not have `make` installed (common on Windows), you can compile the pro
 ```bash
 gcc main.c LRU_Cache.c -o lru_app
 .\lru_app.exe
+```
+## 🎨 Live Visualization
+
+I have added an interactive frontend to visualize how the LRU Cache algorithm works step-by-step.
+**[Click here to try the Live Visualizer](https://assiiinnn.github.io/C_Project/)**
+
+*(Note: The visualizer is a JavaScript simulation of the C logic for demonstration purposes.)*
 
