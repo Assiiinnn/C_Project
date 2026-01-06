@@ -61,4 +61,8 @@ I have added an interactive frontend to visualize how the LRU Cache algorithm wo
 **[Click here to try the Live Visualizer](https://assiiinnn.github.io/C_Project/index.html)**
 
 *(Note: The visualizer is a JavaScript simulation of the C logic for demonstration purposes.)*
-
+```bash
+git add README.md
+git commit -m "Fix case sensitivity in GitHub Pages link"
+git push origin main
+```
