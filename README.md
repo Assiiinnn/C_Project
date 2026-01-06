@@ -40,6 +40,9 @@ To achieve **O(1)** time complexity, we use a **Hybrid Data Structure**:
 * **Space Complexity:** **O(C)** where C is the capacity.
 
 ## 📂 Project Structure
+```bash
+C_Project/ ├── .github/ │ └── workflows/ │ └── test.yml # CI/CD pipeline configuration ├── docs/ │ └── index.html # 🎨 BONUS: Interactive web visualizer ├── src/ │ ├── LRU_Cache.c # Core LRU implementation │ └── LRU_Cache.h # Header file with API definitions ├── tests/ │ ├── input.json # Test case definitions │ └── test_lru.c # Unit test suite ├── .gitignore # Git ignore rules ├── Makefile # Build automation └── README.md # This file
+```
 
 ### 🏗️ Build and Test
 
