@@ -9,7 +9,7 @@ void test_basic_operations() {
     lRUCachePut(cache, 2, 2);
     assert(lRUCacheGet(cache, 1) == 1);
     
-    lRUCachePut(cache, 3, 3);  // Evicts key 2
+    lRUCachePut(cache, 3, 3);  
     assert(lRUCacheGet(cache, 2) == -1);
     assert(lRUCacheGet(cache, 3) == 3);
     assert(lRUCacheGet(cache, 1) == 1);
@@ -24,7 +24,7 @@ void test_single_capacity() {
     lRUCachePut(cache, 1, 1);
     assert(lRUCacheGet(cache, 1) == 1);
     
-    lRUCachePut(cache, 2, 2);  // Evicts key 1
+    lRUCachePut(cache, 2, 2);  
     assert(lRUCacheGet(cache, 1) == -1);
     assert(lRUCacheGet(cache, 2) == 2);
     
@@ -38,11 +38,9 @@ void test_update_existing() {
     lRUCachePut(cache, 1, 1);
     lRUCachePut(cache, 2, 2);
     
-    // Update existing key
     lRUCachePut(cache, 1, 10);
     assert(lRUCacheGet(cache, 1) == 10);
     
-    // Key 1 should be most recently used, so key 2 gets evicted
     lRUCachePut(cache, 3, 3);
     assert(lRUCacheGet(cache, 2) == -1);
     assert(lRUCacheGet(cache, 1) == 10);
@@ -55,7 +53,6 @@ void test_update_existing() {
 void test_empty_cache() {
     LRUCache* cache = lRUCacheCreate(2);
     
-    // Get from empty cache
     assert(lRUCacheGet(cache, 1) == -1);
     assert(lRUCacheGet(cache, 999) == -1);
     
@@ -70,10 +67,8 @@ void test_lru_order() {
     lRUCachePut(cache, 2, 2);
     lRUCachePut(cache, 3, 3);
     
-    // Access key 1 to make it most recently used
     assert(lRUCacheGet(cache, 1) == 1);
-    
-    // Add new key, should evict key 2 (least recently used)
+
     lRUCachePut(cache, 4, 4);
     assert(lRUCacheGet(cache, 2) == -1);
     assert(lRUCacheGet(cache, 1) == 1);
