@@ -131,7 +131,7 @@ We've added an **interactive HTML/JavaScript interface** to visualize how the LR
 - 🎮 **Interactive controls** to test different scenarios
 
 ### 🌐 Try it Live:
-**[🚀 Launch the LRU Cache Visualizer](https://assiiinnn.github.io/C_Project/docs/)**
+**[🚀 Launch the LRU Cache Visualizer](https://assiiinnn.github.io/C_Project/docs/index.html)**
 
 ### 💻 Run Locally:
 
